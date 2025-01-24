@@ -93,10 +93,13 @@
                 </div>
               </div>
             </div>
+             <router-link  to="/cart">
             <i class="pi pi-shopping-bag fs-4"></i>
-            <span class="price">180 <b>ر.س</b></span>
-            <div class="position-relative num">
-              <span class="text-white d-flex justify-content-center align-items-center">1</span>
+            </router-link>
+            <span class="price">{{ cartStore.totalPrice.toFixed(2) }}<b>ر.س</b></span>
+
+            <div class="position-relative num" >
+              <span class="text-white d-flex justify-content-center align-items-center">{{ cartStore.totalQuantity }}</span>
             </div>
           </div>
           <!-- Modal  Bootstrap -->
@@ -185,6 +188,7 @@ import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useUserStore } from "../../stores/userStore";
 import image from "../../assets/hRhoeJLziPSo9JXQNF7oL7YKXdWg8GYRTqN1jlSP.avif";
 import imageUser from "../../assets/download.webp";
+import { useCartStore } from "../../stores/cartStore";
 
 export default {
   data() {
@@ -192,6 +196,11 @@ export default {
       img: image,
       imUser: imageUser,
     };
+  },
+   computed: {
+    cartStore() {
+      return useCartStore();
+    },
   },
   setup() {
     const userStore = useUserStore(); // استخدام مخزن Pinia
@@ -396,8 +405,8 @@ export default {
   height: 20px;
   border-radius: 50%;
   background-color: #ee4444;
-  left: 126px;
-  top: -7px;
+  left: 140px;
+  top: -14px;
   font-size: 12px;
 }
 .search-icon {

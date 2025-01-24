@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 
 export const useCartStore = defineStore("cart", {
   state: () => {
-    // استرجاع البيانات من sessionStorage عند التحميل
+    //    sessionStorage reloud page
     const savedCart = JSON.parse(sessionStorage.getItem("cart")) || {
       cartItems: [],
       totalQuantity: 0,
@@ -16,7 +16,7 @@ export const useCartStore = defineStore("cart", {
     };
   },
   actions: {
-    // حفظ البيانات في sessionStorage
+    //   save data in  sessionStorage
     saveToSessionStorage() {
       const cartData = {
         cartItems: this.cartItems,
@@ -30,13 +30,13 @@ export const useCartStore = defineStore("cart", {
       const existingProduct = this.cartItems.find((item) => item.id === product.id);
 
       if (existingProduct) {
-        existingProduct.quantity += quantity; // زيادة الكمية
+        existingProduct.quantity += quantity; //more quantity
       } else {
         this.cartItems.push({ ...product, quantity });
       }
 
       this.calculateTotals();
-      this.saveToSessionStorage(); // حفظ التغييرات في sessionStorage
+      this.saveToSessionStorage(); //   save chanage in sessionStorage
     },
 
     calculateTotals() {
@@ -45,7 +45,7 @@ export const useCartStore = defineStore("cart", {
         (acc, item) => acc + parseFloat(item.newPrice || 0) * item.quantity,
         0
       );
-      this.saveToSessionStorage(); // حفظ التغييرات في sessionStorage
+      this.saveToSessionStorage(); //   save chanage in sessionStorage
     },
 
     updateQuantity(productId, quantity) {
@@ -53,14 +53,14 @@ export const useCartStore = defineStore("cart", {
       if (product) {
         product.quantity = quantity;
         this.calculateTotals();
-        this.saveToSessionStorage(); // حفظ التغييرات في sessionStorage
+        this.saveToSessionStorage(); // save chanage in sessionStorage
       }
     },
 
     removeFromCart(productId) {
       this.cartItems = this.cartItems.filter((item) => item.id !== productId);
       this.calculateTotals();
-      this.saveToSessionStorage(); // حفظ التغييرات في sessionStorage
+      this.saveToSessionStorage(); // save chanage in sessionStorage
     },
   },
 });

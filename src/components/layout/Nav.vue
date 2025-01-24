@@ -1,5 +1,5 @@
 <template>
-  <header class="py-4 px-0">
+  <header class="py-4 px-0" v-if="$route.path !== '/soon'" >
     <div class="container">
       <div class="row">
         <div class="d-flex justify-content-between align-items-center">
@@ -44,6 +44,9 @@
           </div>
           <!-- ///side menue/////// -->
           <!-- ///search menue/////// -->
+        <div class="logooo" v-if="$route.path !== '/'">
+    <img :src="img" alt="logo" class="img-fluid" />
+  </div>
           <div class="search position-relative flex-grow-1 px-3">
             <input
               v-if="!isMobile || showSearch"
@@ -58,7 +61,7 @@
             </span>
           </div>
           <!-- ///search menue/////// -->
-          <div class="group-icon d-flex gap-3 align-items-center">
+          <div class="group-icon d-flex gap-4 align-items-center">
             <div class="user-icon" @click="toggleModal">
               <span v-if="!isLoggedIn"><i class="pi pi-user fs-4"></i></span>
               <div v-else class="user-menu">
@@ -66,35 +69,55 @@
                   <img :src="imUser" alt="imageUser" class="img-fluid imageUser" />
                 </span>
                 <div v-if="showMenu" class="custom-dropdown-menu" @click.stop>
+                    <router-link to="/Notifications" class="bg-transparent">
                   <div class="d-flex gap-2 align-items-center link-list p-2">
                     <i class="pi pi-bell"></i>
-                    <router-link to="/" class="bg-transparent">الاشعارات</router-link>
+                    الاشعارات
                   </div>
+
+                    </router-link>
+                    <router-link to="/orders" class="bg-transparent">
                   <div class="d-flex gap-2 align-items-center link-list p-2">
                     <i class="pi pi-shopping-bag"></i>
-                    <router-link to="/" class="bg-transparent">الطلبات</router-link>
+                    الطلبات
                   </div>
+
+                    </router-link>
+                    <router-link to="/pending" class="bg-transparent">
                   <div class="d-flex gap-2 align-items-center link-list p-2">
-                    <i class="pi pi-shopping-cart"></i>
-                    <router-link to="/" class="bg-transparent">طلبات بانتظار الدفع</router-link>
+                    <i class="pi pi-shopping-cart"></i >طلبات بانتظار الدفع
                   </div>
+
+                    </router-link>
+                    <router-link to="/favorites" class="bg-transparent">
                   <div class="d-flex gap-2 align-items-center link-list p-2">
                     <i class="pi pi-star"></i>
-                    <router-link to="/" class="bg-transparent">الامنيات</router-link>
+                    الامنيات
                   </div>
+
+                    </router-link>
+                    <router-link to="/profile" class="bg-transparent">
                   <div class="d-flex gap-2 align-items-center link-list p-2">
                     <i class="pi pi-user-edit"></i>
-                    <router-link to="/" class="bg-transparent">حسابى</router-link>
+                    حسابى
                   </div>
+
+                    </router-link>
+                    <router-link class="text-danger" to="/" @click="logout">
                   <div class="d-flex gap-2 align-items-center link-list p-2">
                     <i class="pi pi-sign-out text-danger fw-bold"></i>
-                    <router-link class="text-danger" to="/" @click="logout">تسجيل الخروج</router-link>
+                    تسجيل الخروج
                   </div>
+
+                    </router-link>
                 </div>
               </div>
             </div>
-             <router-link  to="/cart">
+             <router-link  to="/cart" class=" text-black">
+             <div>
+
             <i class="pi pi-shopping-bag fs-4"></i>
+             </div>
             </router-link>
             <span class="price">{{ cartStore.totalPrice.toFixed(2) }}<b>ر.س</b></span>
 
@@ -400,12 +423,16 @@ export default {
 .user-icon {
   cursor: pointer;
 }
+.logooo img{
+  max-width: 80px;
+  padding: 10px;
+}
 .num {
   width: 20px;
   height: 20px;
   border-radius: 50%;
   background-color: #ee4444;
-  left: 140px;
+  left: 168px;
   top: -14px;
   font-size: 12px;
 }
@@ -456,10 +483,12 @@ a:hover {
 .link-list{
   font-size: 11px;
   font-weight: bold;
+
 }
 .link-list:hover{
   background-color: #eee;
   border-radius: 4px;
+
 }
 .form-control:focus {
   box-shadow: #aed8e0;
@@ -563,6 +592,9 @@ a:hover {
 }
  .btn-otp{
   width: 250px !important;
+ }
+ .logooo{
+  display: none;
  }
   .custom-dropdown-menu {
    position: absolute;

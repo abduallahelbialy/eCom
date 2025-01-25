@@ -2,8 +2,8 @@ import { defineStore } from "pinia";
 
 export const useCartStore = defineStore("cart", {
   state: () => {
-    //    sessionStorage reloud page
-    const savedCart = JSON.parse(sessionStorage.getItem("cart")) || {
+    // تحميل البيانات من localStorage بدلاً من sessionStorage
+    const savedCart = JSON.parse(localStorage.getItem("cart")) || {
       cartItems: [],
       totalQuantity: 0,
       totalPrice: 0,
@@ -16,27 +16,27 @@ export const useCartStore = defineStore("cart", {
     };
   },
   actions: {
-    //   save data in  sessionStorage
-    saveToSessionStorage() {
+    // حفظ البيانات في localStorage بدلاً من sessionStorage
+    saveToLocalStorage() {
       const cartData = {
         cartItems: this.cartItems,
         totalQuantity: this.totalQuantity,
         totalPrice: this.totalPrice,
       };
-      sessionStorage.setItem("cart", JSON.stringify(cartData));
+      localStorage.setItem("cart", JSON.stringify(cartData));
     },
 
     addToCart(product, quantity) {
       const existingProduct = this.cartItems.find((item) => item.id === product.id);
 
       if (existingProduct) {
-        existingProduct.quantity += quantity; //more quantity
+        existingProduct.quantity += quantity; // زيادة الكمية
       } else {
         this.cartItems.push({ ...product, quantity });
       }
 
       this.calculateTotals();
-      this.saveToSessionStorage(); //   save chanage in sessionStorage
+      this.saveToLocalStorage(); // حفظ التغييرات في localStorage
     },
 
     calculateTotals() {
@@ -45,7 +45,7 @@ export const useCartStore = defineStore("cart", {
         (acc, item) => acc + parseFloat(item.newPrice || 0) * item.quantity,
         0
       );
-      this.saveToSessionStorage(); //   save chanage in sessionStorage
+      this.saveToLocalStorage(); // حفظ التغييرات في localStorage
     },
 
     updateQuantity(productId, quantity) {
@@ -53,14 +53,14 @@ export const useCartStore = defineStore("cart", {
       if (product) {
         product.quantity = quantity;
         this.calculateTotals();
-        this.saveToSessionStorage(); // save chanage in sessionStorage
+        this.saveToLocalStorage(); // حفظ التغييرات في localStorage
       }
     },
 
     removeFromCart(productId) {
       this.cartItems = this.cartItems.filter((item) => item.id !== productId);
       this.calculateTotals();
-      this.saveToSessionStorage(); // save chanage in sessionStorage
+      this.saveToLocalStorage(); // حفظ التغييرات في localStorage
     },
   },
 });

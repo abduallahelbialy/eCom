@@ -1,8 +1,8 @@
 <template>
-  <div class="favorites-page">
-    <div class="container">
+  <div class="favorites-page  ">
+    <div class="container-fluid">
       <div class="row">
-        <div class="d-flex align-items-center gap-2 title-page mb-4">
+        <div class="d-flex  gap-2 title-page mb-4">
           <span>
             <router-link to="/" class="text-black text-decoration-none fw-medium">الرئيسية</router-link>
           </span>
@@ -15,7 +15,9 @@
             <router-link to="/favorites" class="text-black-50 text-decoration-none fw-medium">الامنيات</router-link>
           </span>
         </div>
-        <div class="col-lg-3">
+        <div class="d-flex justify-content-center flex-wrap">
+
+        <div class="w-25">
           <div class="user-menu">
              <div class="custom-dropdown-menu">
               <router-link to="/Notifications" class="bg-transparent">
@@ -57,8 +59,8 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-9 col-md-12 py-5 mt-5 px-2">
-          <div class="text-fa text-end pt-5 mt-5 px-0">
+        <div class="w-75 partTwo">
+          <div class="text-fa text-end ">
             <span class="fw-bold">الامنيات</span>
           </div>
           <div v-if="favorites.length > 0">
@@ -106,6 +108,7 @@
 
 </span>
           </div>
+        </div>
         </div>
       </div>
     </div>
@@ -315,12 +318,16 @@ isOpen: false,
 
 <style scoped>
 .favorites-page {
-  padding: 20px 0;
-  height: 30vh;
-  background-color: #9cc6ce;
+  padding: 40px 0;
+  position: relative;
+
+ 
 }
 .title-page {
   font-size: 12px;
+    height: 30vh;
+padding: 20px 40px;
+  background-color: #9cc6ce;
 }
 .user-menu {
   position: relative;
@@ -345,7 +352,7 @@ isOpen: false,
 }
 .custom-dropdown-menu {
   position: absolute;
-  top: 49px;
+  top: -108px;
   right: 6px;
   background-color: white;
   background-attachment: fixed;
@@ -505,13 +512,46 @@ isOpen: false,
 
     display: none;
 }
-.favorites-page{
+.partTwo{
+  width: 100% !important;
+}
+.title-page {
   background-color: transparent;
-  height: 0 !important;
+  height: 0;
 }
-.col-lg-9{
-  padding: 1rem !important;
-  margin-top: 1rem !important;
 }
+@media (max-width:799px) {
+.user-menu {
+
+    display: none;
+}
+
+.title-page {
+  background-color: transparent;
+  height: 0;
+}
+}
+@media (max-width:992px) {
+.user-menu {
+
+    display: none;
+}
+
+.title-page {
+  background-color: transparent;
+  height: 0;
+}
+}
+@media (max-width:1024px) {
+.user-menu {
+
+    display: none;
+}
+
+.title-page {
+  background-color: transparent;
+  height: 0;
+}
+
 }
 </style>

@@ -47,19 +47,21 @@
         <div class="logooo" v-if="$route.path !== '/'">
     <img :src="img" alt="logo" class="img-fluid" />
   </div>
-          <div class="search position-relative flex-grow-1 px-3">
-            <input
-              v-if="!isMobile || showSearch"
-              type="search"
-              class="form-control w-100"
-              placeholder="ادخل كلمة البحث"
-              v-model="searchQuery"
-              @input="handleSearch"
-            />
-            <span class="search-icon position-absolute" @click="toggleSearch">
-              <i class="pi pi-search"></i>
-            </span>
-          </div>
+  <div class="flex-grow-1">
+
+
+    <div class="position-relative">
+        <input type="text"
+               class="form-control rounded-pill search-bar pe-5"
+               placeholder="ادخل كلمة البحث"
+               aria-label="Search">
+        <button class="btn position-absolute top-50 end-0 translate-middle-y" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg>
+        </button>
+    </div>
+  </div>
           <!-- ///search menue/////// -->
           <div class="group-icon d-flex gap-4 align-items-center">
             <div class="user-icon" @click="toggleModal">
@@ -113,17 +115,22 @@
                 </div>
               </div>
             </div>
-             <router-link  to="/cart" class=" text-black">
+             <router-link  to="/cart" class=" text-black text-decoration-none">
              <div>
 
+            <div class="position-relative num" >
+
+
+              <span class="text-white d-flex justify-content-center align-items-center">{{ cartStore.totalQuantity }}</span>
+            </div>
             <i class="pi pi-shopping-bag fs-4"></i>
              </div>
             </router-link>
-            <span class="price">{{ cartStore.totalPrice.toFixed(2) }}<b>ر.س</b></span>
+            <div class="mt-2">
 
-            <div class="position-relative num" >
-              <span class="text-white d-flex justify-content-center align-items-center">{{ cartStore.totalQuantity }}</span>
+            <span class="price">{{ cartStore.totalPrice.toFixed(2) }}<b>ر.س</b></span>
             </div>
+
           </div>
           <!-- Modal  Bootstrap -->
           <div
@@ -237,8 +244,6 @@ export default {
     const codeError = ref(""); // رسالة خطأ رمز التحقق
     const countdown = ref(30); // عداد تنازلي
     const canResend = ref(false); // حالة إعادة الإرسال
-    const searchQuery = ref(""); // نص البحث
-    const showSearch = ref(false); // حالة إظهار البحث على الهاتف
 
     let timer;
 
@@ -337,16 +342,9 @@ export default {
       codeError.value = "";
     };
 
-    const handleSearch = () => {
-      // هنا يمكنك إضافة منطق البحث
-      console.log("بحث عن:", searchQuery.value);
-    };
 
-    const toggleSearch = () => {
-      if (isMobile.value) {
-        showSearch.value = !showSearch.value;
-      }
-    };
+
+
 
     const handleClickOutside = (event) => {
       const userMenu = document.querySelector(".user-menu");
@@ -356,22 +354,18 @@ export default {
       }
     };
 
-    const handleResize = () => {
-      isMobile.value = window.innerWidth <= 768;
-    };
+
 
     onMounted(() => {
       if (emailSent.value) {
         startCountdown();
       }
       document.addEventListener("click", handleClickOutside);
-      window.addEventListener("resize", handleResize);
     });
 
     onUnmounted(() => {
       clearInterval(timer);
       document.removeEventListener("click", handleClickOutside);
-      window.removeEventListener("resize", handleResize);
     });
 
     return {
@@ -395,16 +389,23 @@ export default {
       handleOtpInput,
       handleOtpDelete,
       resendCode,
-      searchQuery,
-      showSearch,
-      handleSearch,
-      toggleSearch,
     };
   },
 };
 </script>
 
 <style scoped>
+
+/* .search-bar {
+    transition: width 0.3s ease-in-out;
+    width: 100%;
+}
+
+.search-bar:focus {
+    width: 250px;
+} */
+
+
 .icon {
   width: 40px;
   height: 40px;
@@ -432,8 +433,8 @@ export default {
   height: 20px;
   border-radius: 50%;
   background-color: #ee4444;
-  left: 168px;
-  top: -14px;
+  left: 9px;
+  top: 13px;
   font-size: 12px;
 }
 .search-icon {
@@ -578,6 +579,9 @@ a:hover {
   .offcanvas {
     max-width: 90%;
   }
+  .search-bar{
+    display: none;
+  }
   .icon {
     width: 40px;
     height: 40px;
@@ -598,7 +602,7 @@ a:hover {
  }
   .custom-dropdown-menu {
    position: absolute;
-        left: -108px;
+        left: -180px;
         background-color: white;
         /* border: 1px solid #ccc; */
         border-radius: 4px;
@@ -614,4 +618,9 @@ a:hover {
     display: none;
   } */
 }
+
+
+
+
+
 </style>

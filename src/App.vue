@@ -1,7 +1,7 @@
 <template>
   <Nav/>
    <RouterView />
-   <Footer/>
+   <Footer />
 </template>
 <script>
 import { RouterView } from 'vue-router';

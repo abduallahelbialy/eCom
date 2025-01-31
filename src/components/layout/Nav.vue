@@ -602,14 +602,14 @@ a:hover {
  }
   .custom-dropdown-menu {
    position: absolute;
-        left: -180px;
+        left: -151px;
         background-color: white;
         /* border: 1px solid #ccc; */
         border-radius: 4px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         z-index: 1000;
         padding: 10px;
-        min-width: 345px;
+        min-width: 291px;
   }
   /* .icon {
     right: 219px;

@@ -2,9 +2,9 @@ import { defineStore } from "pinia";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
-    userLoggedIn: localStorage.getItem("userLoggedIn") === "true", // حالة تسجيل الدخول
-    userName: localStorage.getItem("userName") || "", // اسم المستخدم
-    favorites: JSON.parse(localStorage.getItem("favorites")) || [], // المنتجات المفضلة
+    userLoggedIn: localStorage.getItem("userLoggedIn") === "true",
+    userName: localStorage.getItem("userName") || "",
+    favorites: JSON.parse(localStorage.getItem("favorites")) || [], 
   }),
   actions: {
     login() {

@@ -36,9 +36,15 @@
                     class="cart-item p-2 d-flex justify-content-between align-items-center flex-wrap"
                   >
                     <div class="flex-grow-1 d-flex align-items-center flex-wrap gap-3 p-2 box-imag">
-                      <div class="img-pr border mt-2 rounded-2">
-                        <img :src="item.image" alt="Product Image" />
-                      </div>
+                     <div class="img-pr border mt-2 rounded-2">
+  <img
+    :src="item.image"
+    alt="Product Image"
+    data-bs-toggle="modal"
+    :data-bs-target="'#productModal' + item.id"
+  />
+</div>
+
                       <div class="flex-grow-1">
                         <span class="fw-medium">{{ item.name }}</span>
                         <p>{{ item.newPrice }} ر.س</p>
@@ -75,6 +81,95 @@
                 </div>
               </div>
             </div>
+              <!-- Modal -->
+    <div
+      v-for="product in cartStore.cartItems"
+      :key="'modal-' + product.id"
+      class="modal fade"
+      :id="'productModal' + product.id"
+      tabindex="-1"
+      aria-labelledby="modalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header border-0">
+            <div class="me-auto close-m bg-danger">
+              <i
+                class="pi pi-times text-white"
+                type="button"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></i>
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-lg-6 col-md-12">
+                <div class="d-flex justify-content-between bable">
+                  <div class="image-container">
+                    <img :src="product.image" alt="Product Image" class="modal-image" />
+                  </div>
+                  <div class="heart-icon position-absolute top-0 start-0 m-2" @click="removeFromFavorites(product)">
+                    <!-- <i class="pi pi-trash text-danger"></i> -->
+                  </div>
+
+                  <div class="d-flex justify-content-between gap-3">
+                    <div class="social-share mt-2">
+                      <div class="share-button" @click="toggleShare">
+                        <i v-if="!isOpen" class="pi pi-share-alt"></i>
+                        <span v-else>x</span>
+                      </div>
+                      <div v-if="isOpen" class="social-icons">
+                        <a href="https://www.facebook.com/" target="blank" class="icon"><i class="pi pi-facebook"></i></a>
+                        <a href="https://www.whatsapp.com/?lang=ar_AR" target=" blank" class="icon"><i class="pi pi-whatsapp"></i></a>
+                        <a target="blank"  href="https://x.com/?lang=ar" class="icon"><i class="pi pi-twitter"></i></a>
+                        <router-link to="#" class="icon"><i class="pi pi-share-alt"></i></router-link>
+                        <a href="mailto:expomal@gmail.com" class="icon"><i class="pi pi-envelope"></i></a>
+                      </div>
+                    </div>
+                    <div class="d-flex flex-column gap-2 align-items-center">
+                      <h5 class="modal-title" id="modalLabel">{{ product.name }}</h5>
+                      <div class="d-flex align-items-center gap-1">
+                        <span class="new-price text-danger fw-medium">{{ product.newPrice * product.quantity }} </span>
+                        <b>ر.س</b>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-12">
+                <div class="d-flex">
+                  <div class="modal-details">
+                    <div class="d-flex flex-column">
+                      <label class="text-end mb-3">الكمية</label>
+                      <div class="quantity-control d-flex align-items-center gap-2">
+                        <button
+                          @click="increaseQuantity(product)"
+                          class="bg-transparent border-0 text-black-50 fw-medium fs-3"
+                        >
+                          +
+                        </button>
+                        <span class="fw-bold">{{ product.quantity }}</span>
+
+                        <button
+                          @click="decreaseQuantity(product)"
+                          :disabled="product.quantity === 1"
+                          class="bg-transparent border-0 text-black-50 fw-medium fs-3"
+                        >
+                          −
+                        </button>
+                      </div>
+                    </div>
+                  
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
             <div class="col-lg-4 col-md-12">
               <div class="box-final border">
                 <div class="fw-bold">ملخص الطلب</div>
@@ -103,6 +198,11 @@ import { useCartStore } from "../stores/cartStore";
 import { useUserStore } from "../stores/userStore"; // استيراد مخزن المستخدم
 
 export default {
+    data(){
+    return{
+isOpen: false,
+    }
+  },
   computed: {
     cartStore() {
       return useCartStore();
@@ -112,6 +212,9 @@ export default {
     },
   },
   methods: {
+     toggleShare() {
+      this.isOpen = !this.isOpen;
+    },
     back(){
 this.$router.push("/")
     },
@@ -159,7 +262,107 @@ this.$router.push("/")
   transition: 0.3s;
   margin: auto;
 }
+.pi-trash {
+  font-size: 1.2rem;
+}
+.modal-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+/* .btn-cart button {
+  border: 1px solid #87d3d8;
+  background-color: transparent;
+  border-radius: 4px;
+  padding: 7px;
+  width: 200px;
+  color: #87d3d8;
+  font-size: 14px;
+  transition: 0.3s;
+} */
+.btn-cart button:hover {
+  background-color: #aed8e0;
+  color: #2f5961;
+  font-weight: bold;
+}
+.modal-image {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 8px;
+}
 
+.modal-details {
+  flex: 1;
+  margin-top: 20rem;
+}
+
+.quantity-control button {
+  padding: 0 8px;
+  border: 1px solid #ccc;
+  background-color: #f8f9fa;
+  cursor: pointer;
+}
+
+.quantity-control span {
+  margin: 0 8px;
+}
+.close-m {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+.btn-cart button {
+  width: 100%;
+}
+.quantity-control {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border: 1px solid #ccc;
+  width: fit-content;
+  border-radius: 12px;
+}
+.share-button {
+  cursor: pointer;
+  /* padding: 10px 20px; */
+  width: 30px;
+  height: 30px;
+  border: 1px solid #eee;
+  color: #6b7280;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.social-icons {
+  background-color: white;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 12px;
+  padding: 5px;
+}
+
+.icon {
+  color: #000;
+  font-size: 18px;
+  transition: color 0.3s;
+}
+
+.icon:hover {
+  color: #0056b3;
+}
 .empty-cart-message {
   text-align: center;
   font-size: 1.2rem;

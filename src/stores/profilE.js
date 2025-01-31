@@ -16,12 +16,12 @@ export const useProfileStore = defineStore("profile", {
     // تحديث البيانات وتخزينها في sessionStorage
     updateProfile(newData) {
       this.$patch(newData);
-      sessionStorage.setItem("profile", JSON.stringify(this.$state));
+      localStorage.setItem("profile", JSON.stringify(this.$state));
     },
 
     // استرجاع البيانات من sessionStorage
     loadProfileFromSession() {
-      const savedProfile = sessionStorage.getItem("profile");
+      const savedProfile = localStorage.getItem("profile");
       if (savedProfile) {
         this.$patch(JSON.parse(savedProfile));
       }

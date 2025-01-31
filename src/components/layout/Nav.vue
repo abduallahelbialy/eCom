@@ -602,7 +602,7 @@ a:hover {
  }
   .custom-dropdown-menu {
    position: absolute;
-        left: -151px;
+        left: -125px;
         background-color: white;
         /* border: 1px solid #ccc; */
         border-radius: 4px;

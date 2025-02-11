@@ -34,10 +34,10 @@
               </div>
               <div class="offcanvas-body">
                 <div class="mb-3">
-                  <router-link to="/dd" class="text-decoration-none">كهرباء</router-link>
+                  <router-link to="/" class="text-decoration-none">كهرباء</router-link>
                 </div>
                 <div class="mb-3">
-                  <router-link to="/dd" class="text-decoration-none">تخفضيات</router-link>
+                  <router-link to="/" class="text-decoration-none">تخفضيات</router-link>
                 </div>
               </div>
             </div>

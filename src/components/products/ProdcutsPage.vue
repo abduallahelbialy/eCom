@@ -285,7 +285,8 @@ export default {
   text-align: center;
 }
 .product-card {
-  width: 260px;
+  /* width: 260px; */
+  /* max-height: 400px; */
   border: 1px solid #e5e5e5;
   border-radius: 8px;
   padding: 16px;
